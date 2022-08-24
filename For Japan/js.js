@@ -69,6 +69,7 @@ var playBtn = null;
 var playBtnDealy = 0;
 var continueBtn = null;
 var continueBtnDealy = 0;
+
 function controlPlayer(e){
 	if(e.path.length == 14 || clickSO == vid){
 		if (!vid.paused) {
@@ -78,17 +79,7 @@ function controlPlayer(e){
 		}
 	}
 }
-function pushContinueCancelBtn(){
-	if(videoEnd){
-		continueBtn = document.getElementByXPath("/html/body/div[7]/div[7]/div[3]/div[2]/div/div/div/div[1]/table/tbody/tr/td[2]/table/tbody/tr/td[1]/table/tbody/tr/td[4]/span/em/button");
-		if(continueBtn){
-			if(playBtn !== null && Date.now()-continueBtnDealy > 1500){
-				continueBtn.click();
-			}
 
-		}	
-	}
-}
 function setVideo(){
 	vid = document.getElementsByClassName("video");
 	if (vid.length === 0) {
@@ -99,42 +90,6 @@ function setVideo(){
 		menuClicked = false;
 		clickSO = null;
 		clickSOOri = null;
-		//auto next play
-		if(videoEnd){
-			aniListViewed = !document.getElementByXPath("/html/body/div[7]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[2]/div[4]").getAttribute("class").includes("x-hide-display");
-			if(aniListViewed){
-				nextVideo = document.getElementByXPath("/html/body/div[7]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[2]/div[4]/div/div/div/div[1]/div/div[1]/div/div/div[2]/div/div/div/div/div/div[1]");
-				nextVideo = nextVideo.textContent;
-				if(latestVideo === nextVideo || !nextBtnFlag){
-					nextBtnFlag = true;
-					nextBtn = document.getElementsByClassName("x-btn next syno-ux-button syno-ux-button-default syno-vs2-action-button x-btn-noicon x-border-panel")[0];
-					
-					if(!nextBtn.getAttribute("class").includes("x-item-disabled")){
-						nextBtn.click();
-						playBtnDealy = Date.now();
-					}else{
-						videoEnd = false;
-					}
-				}
-				if(videoEnd && nextBtnFlag){
-					playBtn = document.getElementByXPath("/html/body/div[7]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[2]/div[4]/div/div/div/div[1]/div/div[1]/div/div/div[1]/div/div/div[1]/span[1]/em/button");
-					if(playBtn !== null && Date.now()-playBtnDealy > 1500){
-						playBtn.click();
-						continueBtnDealy = Date.now();
-					}
-				}
-			}else{
-				animeList = document.getElementsByClassName("title sds-ellipsis");
-				if(animeList){
-					for (var i=0; i<animeList.length; i++) {
-						animeList[i].textContent = animeList[i].textContent.replace(/_|-/gi, " ");
-					  if(animeList[i].textContent.includes(latestVideo)){
-					     animeList[i].click();
-					  }
-					}
-				}
-			}
-		}
 	}else{
 		vid = vid[0].getElementsByTagName("video");
 		if(vid.length === 0){
@@ -205,7 +160,6 @@ function setVideo(){
 	}
 }
 setInterval(setVideo, 1000);
-setInterval(pushContinueCancelBtn, 1000);
 
 
 //add player option
@@ -216,7 +170,6 @@ function beep() {
 
 
 //자막 가져오기
-
 var webSocket = new WebSocket('ws://localhost:9998');
 var is_use_socket = false;
 
