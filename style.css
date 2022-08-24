@@ -1,0 +1,12 @@
+.subtitle {
+    text-shadow: black 0px 0px 7px, rgb(0 0 0 / 80%) 0px 0px 18px;
+
+    color: white;
+    text-align: center;
+    padding: 0 10px 4px;
+    pointer-events: all;
+    line-height: 1.4em;
+    position: relative;
+    cursor: text;
+
+}
