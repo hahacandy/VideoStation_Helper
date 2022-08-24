@@ -28,7 +28,7 @@ def read_sub_file(anime_name, file_name):
     try:
         srt_sub_data = None
 
-        with open(eng_anime_path + anime_name + '/' + file_name + '.srt', 'r', encoding = 'utf-8') as file_data:
+        with open(eng_anime_path + anime_name + file_name + '.srt', 'r', encoding = 'utf-8') as file_data:
             srt_sub_data = file_data.read()
 
         srt_sub_list = list(srt.parse(srt_sub_data))
@@ -49,7 +49,7 @@ def read_sub_file(anime_name, file_name):
 
         try:
 
-            with open(eng_anime_path + anime_name + '/' + file_name + '.ass', encoding='utf_16') as f:
+            with open(eng_anime_path + anime_name + file_name + '.ass', encoding='utf_16') as f:
                 doc = ass.parse(f)
 
             for ass_sub in doc.events:
@@ -81,7 +81,7 @@ async def accept_func(websocket, path):
             text = '#!!#'.join(text)
             
             text.strip()
-            print(anime_name + '/' + file_name , '전송 완료!')
+            print(anime_name + file_name , '전송 완료!')
             #client_socket.sendall(text.encode(encoding="utf-8"))
             
             await websocket.send(text);# 클라인언트로 echo를 붙여서 재 전송한다.
