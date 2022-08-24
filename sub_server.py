@@ -49,7 +49,7 @@ def read_sub_file(anime_name, file_name):
 
         try:
 
-            with open("60FPS_d_01.ass", encoding='utf_16') as f:
+            with open(eng_anime_path + anime_name + '/' + file_name + '.ass', encoding='utf_16') as f:
                 doc = ass.parse(f)
 
             for ass_sub in doc.events:

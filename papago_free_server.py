@@ -16,6 +16,7 @@ def driver_set():
     option = webdriver.ChromeOptions()
 
     option.add_argument('--start-maximized')
+    option.add_argument('headless')
     option.add_argument("disable-gpu")
     option.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
     option.add_argument("lang=ko_KR") # 한국어!
