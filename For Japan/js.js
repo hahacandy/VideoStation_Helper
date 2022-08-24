@@ -100,7 +100,7 @@ function setVideo(){
 		clickSO = null;
 		clickSOOri = null;
 		//auto next play
-		if(false){
+		if(videoEnd){
 			aniListViewed = !document.getElementByXPath("/html/body/div[7]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[2]/div[4]").getAttribute("class").includes("x-hide-display");
 			if(aniListViewed){
 				nextVideo = document.getElementByXPath("/html/body/div[7]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[2]/div[4]/div/div/div/div[1]/div/div[1]/div/div/div[2]/div/div/div/div/div/div[1]");
