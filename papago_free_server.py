@@ -40,9 +40,12 @@ def trans_text(query, driver):
     json_data = json.load(io)
     
     query = json_data['msg']
+    try:
+        output_lng = json_data['output_lng']
+    except:
+        output_lng = 'ko' # ja en ko ru
 
     input_lng = 'auto'
-    output_lng = 'ko'
     input_msg = query.strip()
 
     if len(input_msg) == 0:
