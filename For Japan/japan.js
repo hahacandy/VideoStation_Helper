@@ -227,8 +227,27 @@ function get_sub(){
 		
 		folder_name = document.getElementsByClassName('list-template selected')[0].textContent
 		
-		data.anime_name = folder_name + '/' + getElementByXpath('/html/body/div[8]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr/td[2]/span/em/button').textContent;
-		data.file_name = getElementByXpath('/html/body/div[8]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr/td[3]/span/em/button').textContent.replace('.mp4','');
+		path_names = getElementByXpath('/html/body/div[8]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr').childNodes;
+		
+		path_name = '';
+		
+		file_name = '';
+		
+	    for (var i = 1; i < path_names.length; i++) { 
+	    	
+	    	temp_path_name = path_names[i].textContent;
+	    	if(temp_path_name.includes('.mp4') == false){
+	    		path_name = path_name + temp_path_name + '/';
+	    	}else{
+	    		file_name = temp_path_name.replace('.mp4', '');
+	    	}
+	    	
+	    	
+	    }
+	    
+
+		data.anime_name = folder_name + '/' +  path_name
+		data.file_name = file_name;
 		
 		if(late_file_name != data.file_name){
 			send(data);
@@ -243,10 +262,7 @@ setInterval(get_sub, 1000);
 
 function get_video_time(mode){
 	
-
 	sub_list = sub_datas.split('#!!#');
-	
-	//sub_list.reverse();
 	
 	vid_time = vid.currentTime;
 	
