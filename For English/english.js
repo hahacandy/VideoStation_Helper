@@ -41,6 +41,10 @@ var getCookie = function(name) {
 	return value? value[2] : null;
 };
 
+function getElementByXpath(path) {
+  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+
 var vid = null;
 var subT = null;
 var clickSO = null;
@@ -48,12 +52,16 @@ var clickSOOri = null;
 var videoFound = false;
 var vid_volume_cookie = null;
 var vid_mute_cookie = null;
+var menuList = null;
+var menuClicked = false;
+var menuWindow = null;
 
 function controlPlayer(e){
 	if(e.path.length == 14 || clickSO == vid){
 		if (!vid.paused) {
 			vid.pause();
 		} else {
+			vid.currentTime = vid.currentTime +0.1;
 			vid.play();
 		}
 	}
@@ -94,18 +102,45 @@ function setVideo(){
 			//clickScreen playerControl
 			clickSOOri = clickSO;
 			clickSO.addEventListener("mousedown", controlPlayer, true);
+			//
+			menuClicked = false;
 		}else{
 			if(clickSOOri != clickSO){
 				//clickScreen playerControl
-				vid.removeEventListener("mousedown", controlPlayer, true);
-				subT.removeEventListener("mousedown", controlPlayer, true);
-				
 				clickSOOri = clickSO;
 				clickSO.addEventListener("mousedown", controlPlayer, true);
 			}
 		}
 		setCookie("vvc", vid.volume, 999);
 		setCookie("vmc", vid.muted.toString(), 999);
+		//If subtitles are applied, turn them off.
+		try{
+			if(!menuClicked){
+				try{
+					getElementByXpath("/html/body/div[7]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[7]/em/button").click();
+				}catch(error){}
+				try{
+					getElementByXpath("/html/body/div[8]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[7]/em/button").click();
+				}catch(error){}
+				
+				
+				
+				menuList = document.getElementsByClassName("item sds-ellipsis");
+				if(menuList.length > 0){
+					for (var i=0; i<menuList.length; i++) {
+					  if(menuList[i].textContent.includes("자막 없음") || menuList[i].textContent.includes("サブタイトルなし")){
+					     menuList[i].click();
+					  }
+					  menuClicked = true;
+					}
+					
+			
+					menuWindow = document.getElementsByClassName("syno-ux-button-menu");
+					menuWindow = menuWindow[menuWindow.length-1]
+					menuWindow.style.visibility = "hidden";
+				}
+			}
+		}catch(error){}
 	}
 }
 setInterval(setVideo, 1000);
@@ -165,9 +200,6 @@ function send(data) {
 	}
 }
 
-function getElementByXpath(path) {
-  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
 
 function get_sub(){
 
@@ -213,9 +245,9 @@ setInterval(get_sub, 1000);
 function get_video_time(mode){
 	
 
-	sub_list = sub_datas.split('#!!#');
+	var sub_list = sub_datas.split('#!!#');
 	
-	vid_time = vid.currentTime;
+	var vid_time = vid.currentTime;
 	
 
 	for(var i=0; i<sub_list.length; i++){
@@ -278,6 +310,7 @@ function set_player(){
 				if (!vid.paused) {
 					vid.pause();
 				} else {
+					vid.currentTime = vid.currentTime +0.1;
 					vid.play();
 				}
 			} else if (e.key == "8" && e.code == "Numpad8") {
@@ -375,21 +408,21 @@ function htmlToElement(html) {
 
 
 var late_eng_sub = '';
-function set_eng_sub(){
+function set_trans_sub(){
 	
-	//create eng sub
+	//create trans sub
 	try{
 		var subtitle_el = document.getElementsByClassName('subtitle')[1];
 		if(subtitle_el.childElementCount == 1){
 			
-			var textnode = htmlToElement("<span id='trans_sub' style='background-color: rgba(0, 128, 0, 0.75); padding: 5px;'></span>");
+			var textnode = htmlToElement("<span id='trans_sub' style='background-color: rgba(0, 128, 0, 0.75);padding:5px;'></span>");
 			
 			document.getElementsByClassName('subtitle')[1].appendChild(textnode);
 		}
 		
 	}catch(error){}	
 	
-	//show and hide eng_sub
+	//show and hide trans_sub
 	
 	try{
 		var subtitle_el = document.getElementsByClassName('subtitle')[1];
@@ -413,4 +446,102 @@ function set_eng_sub(){
 	}catch(error){}
 	
 }
-setInterval(set_eng_sub, 100);
+setInterval(set_trans_sub, 100);
+
+
+//こっちで字幕を表現する（次の字幕に行く前に止めるため）
+var current_sub_start_time = 0;
+var current_sub_end_time = 0;
+var current_sub_text = '';
+function get_current_sub(){
+	
+	try{
+		
+		var sub_list = sub_datas.split('#!!#');
+		
+		var vid_time = vid.currentTime;
+		
+		var subtitle_el = document.getElementsByClassName('subtitle')[1];
+		
+		var eng_sub_el = subtitle_el.childNodes[0];
+		
+		var is_find_sub = false
+		
+		
+		
+		for(var i=0; i<sub_list.length; i++){
+			
+			sub_data  = sub_list[i].split('#!#');
+			
+			var temp_time_start = parseFloat(sub_data[0]) + sync_sub_second;
+			var temp_time_end = parseFloat(sub_data[1]) + sync_sub_second;
+			
+			
+			
+
+			if(temp_time_start <= vid_time && vid_time <= temp_time_end){
+
+
+				is_find_sub= true;
+			
+
+				break;
+
+
+			}
+			
+		}
+		
+		if(current_sub_end_time != 0 ){
+			if(vid_time.toFixed(1) == current_sub_end_time.toFixed(1)){
+				vid.pause();
+				vid.currentTime = current_sub_end_time;
+			}
+		}
+
+		
+		if(is_find_sub == false){
+			if(vid.paused == false){
+				subtitle_el.className = 'subtitle x-hide-display';
+			}
+			
+		}else{
+				
+			current_sub_start_time = temp_time_start;
+			current_sub_end_time = temp_time_end;
+			current_sub_text = sub_data[2];
+			
+			eng_sub_el.textContent = current_sub_text;
+			eng_sub_el.style.marginBottom='5px';
+			eng_sub_el.style.padding='5px';
+			
+			subtitle_el.style.lineHeight = subtitle_el.style.fontSize;
+			subtitle_el.className = 'subtitle';
+		}
+	
+	}catch(error){}
+	
+}
+setInterval(get_current_sub, 100);
+
+
+
+
+/*
+
+			temp_text = sub_data[2];
+			if(eng_sub_el.textContent != temp_text){
+				eng_sub_el.textContent = temp_text;
+				eng_sub_el.style.marginBottom='5px';
+				eng_sub_el.style.padding='5px';
+				
+				subtitle_el.style.lineHeight = subtitle_el.style.fontSize;
+				subtitle_el.className = 'subtitle';
+				break;
+			}
+			
+			
+			subtitle_el.className = 'subtitle x-hide-display';
+
+
+*/

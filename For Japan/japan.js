@@ -40,7 +40,9 @@ var getCookie = function(name) {
 	var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
 	return value? value[2] : null;
 };
-
+function getElementByXpath(path) {
+  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
 var vid = null;
 var subT = null;
 var clickSO = null;
@@ -48,6 +50,10 @@ var clickSOOri = null;
 var videoFound = false;
 var vid_volume_cookie = null;
 var vid_mute_cookie = null;
+var menuList = null;
+var menuClicked = false;
+var menuWindow = null;
+
 
 function controlPlayer(e){
 	if(e.path.length == 14 || clickSO == vid){
@@ -65,6 +71,8 @@ function setVideo(){
 		console.log("finding player...");
 		subT = null;
 		videoFound = false;
+		menuList = null;
+		menuClicked = false;
 		clickSO = null;
 		clickSOOri = null;
 	}else{
@@ -72,6 +80,9 @@ function setVideo(){
 		if(vid.length === 0){
 			return;
 		}
+
+
+
 		vid = vid[0];
 		subT = document.getElementsByClassName("subtitle");
 		subT = subT[subT.length-1]
@@ -94,18 +105,42 @@ function setVideo(){
 			//clickScreen playerControl
 			clickSOOri = clickSO;
 			clickSO.addEventListener("mousedown", controlPlayer, true);
+			//
+			menuClicked = false;
 		}else{
 			if(clickSOOri != clickSO){
 				//clickScreen playerControl
-				vid.removeEventListener("mousedown", controlPlayer, true);
-				subT.removeEventListener("mousedown", controlPlayer, true);
-				
 				clickSOOri = clickSO;
 				clickSO.addEventListener("mousedown", controlPlayer, true);
 			}
 		}
 		setCookie("vvc", vid.volume, 999);
 		setCookie("vmc", vid.muted.toString(), 999);
+		//load external subtitle
+		try{
+			if(!menuClicked){
+				try{
+					getElementByXpath("/html/body/div[7]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[7]/em/button").click();
+				}catch(error){}
+				try{
+					getElementByXpath("/html/body/div[8]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[7]/em/button").click();
+				}catch(error){}
+				
+				menuList = document.getElementsByClassName("item sds-ellipsis");
+				if(menuList.length > 0){
+					for (var i=0; i<menuList.length; i++) {
+					  if(menuList[i].textContent.includes("외부 자막") || menuList[i].textContent.includes("外部サブタイトル")){
+					     menuList[i].click();
+					  }
+					  menuClicked = true;
+					}
+					menuWindow = document.getElementsByClassName("syno-ux-button-menu");
+					menuWindow = menuWindow[menuWindow.length-1]
+					menuWindow.style.visibility = "hidden";
+				}
+			}
+		}catch(error){}
+
 	}
 }
 setInterval(setVideo, 1000);
@@ -165,9 +200,7 @@ function send(data) {
 	}
 }
 
-function getElementByXpath(path) {
-  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
+
 
 function get_sub(){
 
@@ -201,7 +234,6 @@ function get_sub(){
 		if(late_file_name != data.file_name){
 			send(data);
 			late_file_name = data.file_name;
-			sync_sub_second = 0;
 		}
 
 	}catch(error){}
@@ -212,7 +244,6 @@ setInterval(get_sub, 1000);
 
 function get_video_time(mode){
 	
-
 	sub_list = sub_datas.split('#!!#');
 	
 	vid_time = vid.currentTime;
