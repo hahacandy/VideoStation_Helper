@@ -479,7 +479,7 @@ function get_current_sub(){
 			
 			
 
-			if(temp_time_start <= vid_time && vid_time <= temp_time_end){
+			if(temp_time_start < vid_time && vid_time <= temp_time_end){
 
 
 				is_find_sub= true;
