@@ -523,25 +523,3 @@ function get_current_sub(){
 	
 }
 setInterval(get_current_sub, 100);
-
-
-
-
-/*
-
-			temp_text = sub_data[2];
-			if(eng_sub_el.textContent != temp_text){
-				eng_sub_el.textContent = temp_text;
-				eng_sub_el.style.marginBottom='5px';
-				eng_sub_el.style.padding='5px';
-				
-				subtitle_el.style.lineHeight = subtitle_el.style.fontSize;
-				subtitle_el.className = 'subtitle';
-				break;
-			}
-			
-			
-			subtitle_el.className = 'subtitle x-hide-display';
-
-
-*/
