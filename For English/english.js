@@ -265,7 +265,7 @@ function get_video_time(mode){
 		
 				previous_sub_data = sub_list[i-2].split('#!#');
 
-				vid.currentTime = parseFloat(previous_sub_data[0]) + sync_sub_second;
+				vid.currentTime = parseFloat(previous_sub_data[0]) + sync_sub_second + 0.1;
 				
 				break;
 			
@@ -273,7 +273,7 @@ function get_video_time(mode){
 			
 				next_sub_data = sub_list[i].split('#!#');
 
-				vid.currentTime = parseFloat(next_sub_data[0]) + sync_sub_second;
+				vid.currentTime = parseFloat(next_sub_data[0]) + sync_sub_second + 0.1;
 				
 				break;
 				
@@ -301,19 +301,19 @@ function set_player(){
 
 		
 		window.addEventListener("keyup", (e) => {
-			//console.log(e)
+			console.log(e)
 			if (e.key == "4" && e.code == "Numpad4" || e.code == "KeyA") {
 				get_video_time('left');
 			} else if (e.key == "6" && e.code == "Numpad6" || e.code == "KeyD") {
 				get_video_time('right');
-			} else if (e.key == "0" && e.code == "Numpad0") {
+			} else if ((e.key == "0" && e.code == "Numpad0")) {
 				if (!vid.paused) {
 					vid.pause();
 				} else {
 					vid.currentTime = vid.currentTime +0.1;
 					vid.play();
 				}
-			} else if (e.key == "8" && e.code == "Numpad8") {
+			}else if (e.key == "8" && e.code == "Numpad8") {
 
 				try {
 					vid.volume = vid.volume + 0.1;
