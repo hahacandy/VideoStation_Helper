@@ -40,13 +40,7 @@ var getCookie = function(name) {
 	var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
 	return value? value[2] : null;
 };
-document.getElementByXPath = 
-	function(sValue) {
-		var a = this.evaluate(sValue, this, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-		if (a.snapshotLength > 0){
-			return a.snapshotItem(0); 
-		} 
-};
+
 var vid = null;
 var subT = null;
 var clickSO = null;
@@ -54,21 +48,6 @@ var clickSOOri = null;
 var videoFound = false;
 var vid_volume_cookie = null;
 var vid_mute_cookie = null;
-var menuList = null;
-var menuClicked = false;
-var menuWindow = null;
-var animeList = null;
-var latestVideo = null;
-var videoEnd = false;
-var aniListViewed = false;
-var nextVideo = null;
-var nextBtn = null;
-var nextBtnFlag = false;
-var nextBtnDealy = 0;
-var playBtn = null;
-var playBtnDealy = 0;
-var continueBtn = null;
-var continueBtnDealy = 0;
 
 function controlPlayer(e){
 	if(e.path.length == 14 || clickSO == vid){
@@ -86,8 +65,6 @@ function setVideo(){
 		console.log("finding player...");
 		subT = null;
 		videoFound = false;
-		menuList = null;
-		menuClicked = false;
 		clickSO = null;
 		clickSOOri = null;
 	}else{
@@ -95,12 +72,6 @@ function setVideo(){
 		if(vid.length === 0){
 			return;
 		}
-		videoEnd = false;
-		nextVideo = null;
-		nextBtn = null;
-		playBtn = null;
-		continueBtn = null;
-		nextBtnFlag = false;
 		vid = vid[0];
 		subT = document.getElementsByClassName("subtitle");
 		subT = subT[subT.length-1]
@@ -123,8 +94,6 @@ function setVideo(){
 			//clickScreen playerControl
 			clickSOOri = clickSO;
 			clickSO.addEventListener("mousedown", controlPlayer, true);
-			//auto next play
-			latestVideo = document.getElementsByClassName("xtb-text title")[0].textContent;
 		}else{
 			if(clickSOOri != clickSO){
 				//clickScreen playerControl
@@ -137,26 +106,6 @@ function setVideo(){
 		}
 		setCookie("vvc", vid.volume, 999);
 		setCookie("vmc", vid.muted.toString(), 999);
-		//load external subtitle
-		try{
-			if(!menuClicked){
-				document.getElementByXPath("/html/body/div[7]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[7]/em/button").click();
-				menuList = document.getElementsByClassName("item sds-ellipsis");
-				if(menuList.length > 0){
-					for (var i=0; i<menuList.length; i++) {
-					  if(menuList[i].textContent.includes("외부 자막")){
-					     menuList[i].click();
-					  }
-					  menuClicked = true;
-					}
-					menuWindow = document.getElementsByClassName("syno-ux-button-menu");
-					menuWindow = menuWindow[menuWindow.length-1]
-					menuWindow.style.visibility = "hidden";
-				}
-			}
-		}catch(error){}
-		//auto next play
-		videoEnd = vid.duration-vid.currentTime < 3;
 	}
 }
 setInterval(setVideo, 1000);
@@ -265,8 +214,6 @@ function get_video_time(mode){
 	
 
 	sub_list = sub_datas.split('#!!#');
-	
-	//sub_list.reverse();
 	
 	vid_time = vid.currentTime;
 	
