@@ -522,4 +522,4 @@ function get_current_sub(){
 	}catch(error){}
 	
 }
-setInterval(get_current_sub, 100);
+setInterval(get_current_sub, 50);
