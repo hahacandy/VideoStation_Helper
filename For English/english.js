@@ -283,6 +283,8 @@ function get_video_time(mode){
 
 				vid.currentTime = parseFloat(current_sub_data[0]) + sync_sub_second;
 				
+				vid.play();
+				
 				break;
 			
 			}
