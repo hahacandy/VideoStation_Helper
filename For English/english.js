@@ -68,7 +68,7 @@ function controlPlayer(e){
 }
 
 function setVideo(){
-	vid = document.getElementsByClassName("video");
+	vid = document.getElementsByTagName('video')
 	if (vid.length === 0) {
 		console.log("finding player...");
 		subT = null;
@@ -76,14 +76,12 @@ function setVideo(){
 		clickSO = null;
 		clickSOOri = null;
 	}else{
-		vid = vid[0].getElementsByTagName("video");
-		if(vid.length === 0){
-			return;
-		}
+	
 		vid = vid[0];
+		
 		subT = document.getElementsByClassName("subtitle");
 		subT = subT[subT.length-1]
-		if(subT.getAttribute("class").include("x-hide-display")){
+		if(subT.getAttribute("class").includes("x-hide-display")){
 			clickSO = vid;
 		}else{
 			clickSO = subT;
@@ -91,6 +89,7 @@ function setVideo(){
 		if(!videoFound){
 			videoFound = true;
 			console.log("player find!");
+			
 			vid_volume_cookie = getCookie("vvc");
 			if(vid_volume_cookie !== null){
 				vid.volume = vid_volume_cookie;
@@ -109,6 +108,7 @@ function setVideo(){
 				//clickScreen playerControl
 				clickSOOri = clickSO;
 				clickSO.addEventListener("mousedown", controlPlayer, true);
+				
 			}
 		}
 		setCookie("vvc", vid.volume, 999);
@@ -117,15 +117,12 @@ function setVideo(){
 		try{
 			if(!menuClicked){
 				try{
-					getElementByXpath("/html/body/div[7]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[7]/em/button").click();
+					getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
 				}catch(error){}
-				try{
-					getElementByXpath("/html/body/div[8]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[7]/em/button").click();
-				}catch(error){}
+
 				
 				
-				
-				menuList = document.getElementsByClassName("item sds-ellipsis");
+				menuList = document.getElementsByClassName("item vc-ellipsis");
 				if(menuList.length > 0){
 					for (var i=0; i<menuList.length; i++) {
 					  if(menuList[i].textContent.includes("자막 없음") || menuList[i].textContent.includes("サブタイトルなし")){
@@ -208,7 +205,7 @@ function get_sub(){
 		
 		folder_name = document.getElementsByClassName('list-template selected')[0].textContent
 		
-		path_names = getElementByXpath('/html/body/div[8]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr').childNodes;
+		path_names = getElementByXpath('/html/body/div[10]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr').childNodes;
 		
 		path_name = '';
 		
@@ -266,7 +263,7 @@ function get_video_time(mode){
 				previous_sub_data = sub_list[i-2].split('#!#');
 
 				vid.currentTime = parseFloat(previous_sub_data[0]) + sync_sub_second + 0.1;
-				
+				vid.play();
 				break;
 			
 			}else if(mode == 'right'){
@@ -274,7 +271,7 @@ function get_video_time(mode){
 				next_sub_data = sub_list[i].split('#!#');
 
 				vid.currentTime = parseFloat(next_sub_data[0]) + sync_sub_second + 0.1;
-				
+				vid.play();
 				break;
 				
 			}else if(mode == 'down'){
@@ -282,9 +279,7 @@ function get_video_time(mode){
 				current_sub_data = sub_list[i-1].split('#!#');
 
 				vid.currentTime = parseFloat(current_sub_data[0]) + sync_sub_second;
-				
 				vid.play();
-				
 				break;
 			
 			}

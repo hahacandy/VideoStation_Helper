@@ -1,6 +1,8 @@
 Synology の　VideoStation で字幕を見やすくする機能
 
-VideoStationバージョン：2.4.10-1632
+DSM 7.1
+VideoStationバージョン：3.0.3-2084
+VideoStationで”フォルダ別”にする必要がある
 
 "For Japan"の機能
 音量の記憶
