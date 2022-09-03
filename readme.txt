@@ -13,3 +13,5 @@ numpadを使って　前、今、後　の字幕に便利に移動できる
 "For Japan"を持ちながら英語の翻訳機能を搭載
 当時の字幕が終わればそのまま停止、再び再生するには"画面クリック"または"numpad0 押し"  が必要
 
+pip install selenium webdriver_manager nest_asyncio asyncio websockets srt ass webvtt-py
+
