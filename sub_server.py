@@ -59,8 +59,21 @@ def read_sub_file(anime_name, file_name):
             return sub_list
 
         except Exception as e:
-            print(e)
-            return None
+        
+            try:
+
+                with open(eng_anime_path + anime_name + file_name + '.ass', encoding='utf-8-sig') as f:
+                    doc = ass.parse(f)
+
+                for ass_sub in doc.events:
+                    sub = subtime_to_second(ass_sub.start) + '#!#' + subtime_to_second(ass_sub.end) + '#!#' + ass_sub.text
+                    sub_list.append(sub)
+
+                return sub_list
+
+            except Exception as e:
+                print(e)
+                return None
 
 async def accept_func(websocket, path):
     while True:

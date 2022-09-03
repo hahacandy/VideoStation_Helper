@@ -330,7 +330,7 @@ setTimeout(set_player, 1000);
 //手動で字幕のsyncが調整されていたら対応する、しかし一度設定の同期画面を表す必要あり
 function set_sync_sub_second(){
 	try{
-		sync_sub_second = parseFloat(getElementByXpath('/html/body/div[8]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
+		sync_sub_second = parseFloat(getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
 	}catch(error){}
 }
 setInterval(set_sync_sub_second, 1000);
