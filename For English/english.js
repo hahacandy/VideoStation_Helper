@@ -120,6 +120,8 @@ function setVideo(){
 					getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
 				}catch(error){}
 
+				
+				
 				menuList = document.getElementsByClassName("item vc-ellipsis");
 				if(menuList.length > 0){
 					for (var i=0; i<menuList.length; i++) {
@@ -133,28 +135,6 @@ function setVideo(){
 					menuWindow = document.getElementsByClassName("syno-ux-button-menu");
 					menuWindow = menuWindow[menuWindow.length-1]
 					menuWindow.style.visibility = "hidden";
-				}
-				
-				
-				try{
-					getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
-				}catch(error){}
-				
-				menuList = document.getElementsByClassName("item vc-ellipsis");
-				if(menuList.length > 0){
-					for (var i=0; i<menuList.length; i++) {
-					  if(menuList[i].textContent.includes("자막 동기화") || menuList[i].textContent.includes("サブタイトルを同期")){
-					     menuList[i].click();
-					  }
-					}
-					
-					try{
-						sync_sub_second = parseFloat(getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
-					}catch(error){}
-					
-					menuWindow = document.getElementsByClassName("x-btn syno-vc-button syno-ux-button syno-ux-button-blue x-btn-noicon");
-					menuWindow = menuWindow[menuWindow.length-1];
-					menuWindow.click();
 				}
 			}
 		}catch(error){}
@@ -386,7 +366,7 @@ function onMessage2(event) {
 		
 		try{
 			var trans_sub = document.getElementById('trans_sub');
-			trans_sub.innerHTML = '<br>' + event.data.toString();
+			trans_sub.innerHTML = '<br>' + event.data.toString();ㅇ
 			
 		}catch(error){}
 		
@@ -435,6 +415,12 @@ function set_trans_sub(){
 			var textnode = htmlToElement("<span id='trans_sub' style='background-color: rgba(0, 128, 0, 0.75);padding:5px;'></span>");
 			
 			document.getElementsByClassName('subtitle')[1].appendChild(textnode);
+			
+			
+			var eng_sub_el = subtitle_el.childNodes[0];
+			
+			eng_sub_el.style.marginBottom='5px';
+			eng_sub_el.style.padding='5px';
 		}
 		
 	}catch(error){}	
@@ -443,6 +429,7 @@ function set_trans_sub(){
 	
 	try{
 		var subtitle_el = document.getElementsByClassName('subtitle')[1];
+		var eng_sub = subtitle_el.childNodes[0];
 		var trans_sub = document.getElementById('trans_sub');
 		
 		var eng_sub_text = subtitle_el.childNodes[0].textContent;
@@ -456,6 +443,8 @@ function set_trans_sub(){
 			trans_sub.style.display = 'none';
 			trans_sub.textContent = '';
 		}else{
+			eng_sub.style.backgroundColor='rgba(0, 128, 0, 0.75)';
+			trans_sub.style.backgroundColor='rgba(0, 128, 0, 0.75)';
 			trans_sub.style.display = '';
 		}
 
@@ -481,6 +470,7 @@ function get_current_sub(){
 		var subtitle_el = document.getElementsByClassName('subtitle')[1];
 		
 		var eng_sub_el = subtitle_el.childNodes[0];
+		var trans_sub_el = subtitle_el.childNodes[1];
 		
 		var is_find_sub = false
 		
@@ -513,6 +503,9 @@ function get_current_sub(){
 			if(vid_time.toFixed(1) == current_sub_end_time.toFixed(1)){
 				vid.pause();
 				vid.currentTime = current_sub_end_time;
+				
+				eng_sub_el.style.backgroundColor='rgba(107, 153, 0, 0.75)';
+				trans_sub_el.style.backgroundColor='rgba(107, 153, 0, 0.75)';
 			}
 		}
 
@@ -529,8 +522,6 @@ function get_current_sub(){
 			current_sub_text = sub_data[2];
 			
 			eng_sub_el.textContent = current_sub_text;
-			eng_sub_el.style.marginBottom='5px';
-			eng_sub_el.style.padding='5px';
 			
 			subtitle_el.style.lineHeight = subtitle_el.style.fontSize;
 			subtitle_el.className = 'subtitle';
