@@ -120,8 +120,6 @@ function setVideo(){
 					getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
 				}catch(error){}
 
-				
-				
 				menuList = document.getElementsByClassName("item vc-ellipsis");
 				if(menuList.length > 0){
 					for (var i=0; i<menuList.length; i++) {
@@ -135,6 +133,28 @@ function setVideo(){
 					menuWindow = document.getElementsByClassName("syno-ux-button-menu");
 					menuWindow = menuWindow[menuWindow.length-1]
 					menuWindow.style.visibility = "hidden";
+				}
+				
+				
+				try{
+					getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
+				}catch(error){}
+				
+				menuList = document.getElementsByClassName("item vc-ellipsis");
+				if(menuList.length > 0){
+					for (var i=0; i<menuList.length; i++) {
+					  if(menuList[i].textContent.includes("자막 동기화") || menuList[i].textContent.includes("サブタイトルを同期")){
+					     menuList[i].click();
+					  }
+					}
+					
+					try{
+						sync_sub_second = parseFloat(getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
+					}catch(error){}
+					
+					menuWindow = document.getElementsByClassName("x-btn syno-vc-button syno-ux-button syno-ux-button-blue x-btn-noicon");
+					menuWindow = menuWindow[menuWindow.length-1];
+					menuWindow.click();
 				}
 			}
 		}catch(error){}
