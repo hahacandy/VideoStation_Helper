@@ -48,6 +48,7 @@ def trans_text(query, driver):
 
     input_lng = 'auto'
     input_msg = query.strip()
+    input_msg = input_msg.replace('\n', ' ')
 
     if len(input_msg) == 0:
         return None
