@@ -20,7 +20,7 @@ def subtime_to_second(sub_time):
     return str(sum_time)
 
 def read_sub_file(anime_name, file_name):
-    global eng_anime_path
+    global eng_anime_path 
     
     sub_list = []
     
@@ -35,12 +35,8 @@ def read_sub_file(anime_name, file_name):
 
         for srt_sub in srt_sub_list:
 
-            sub = subtime_to_second(srt_sub.start) + '#!#' + subtime_to_second(srt_sub.end) + '#!#' + srt_sub.content
+            sub_list.append({'start':subtime_to_second(srt_sub.start), 'end':subtime_to_second(srt_sub.end), 'text':srt_sub.content})
 
-            sub_list.append(sub)
-
-        return sub_list
-    
     except Exception as e:
         print(e)
     
@@ -53,10 +49,9 @@ def read_sub_file(anime_name, file_name):
                 doc = ass.parse(f)
 
             for ass_sub in doc.events:
-                sub = subtime_to_second(ass_sub.start) + '#!#' + subtime_to_second(ass_sub.end) + '#!#' + ass_sub.text
-                sub_list.append(sub)
 
-            return sub_list
+                sub_list.append({'start':subtime_to_second(ass_sub.start), 'end':subtime_to_second(ass_sub.end), 'text':ass_sub.text})
+
 
         except Exception as e:
         
@@ -66,14 +61,24 @@ def read_sub_file(anime_name, file_name):
                     doc = ass.parse(f)
 
                 for ass_sub in doc.events:
-                    sub = subtime_to_second(ass_sub.start) + '#!#' + subtime_to_second(ass_sub.end) + '#!#' + ass_sub.text
-                    sub_list.append(sub)
-
-                return sub_list
+                    sub_list.append({'start':subtime_to_second(ass_sub.start), 'end':subtime_to_second(ass_sub.end), 'text':ass_sub.text})
 
             except Exception as e:
                 print(e)
-                return None
+            
+            
+    if len(sub_list) != 0:
+        sub_list = sorted(sub_list, key = lambda x : float(x['start']))
+        
+        sub_list2 = []
+        for sub_li in sub_list:
+            
+            sub = sub_li['start'] + '#!#' + sub_li['end'] + '#!#' + sub_li['text']
+            sub_list2.append(sub)
+            
+        return sub_list2
+    else:
+        return None
 
 async def accept_func(websocket, path):
     while True:
