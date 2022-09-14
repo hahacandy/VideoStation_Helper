@@ -111,7 +111,7 @@ nest_asyncio.apply()
 
 # "0.0.0.0" => 서버 pc에 ip 주소를 입력해준다.
 # 0000 => 서버 pc에 포트를 입력 해 준다.
-start_server = websockets.serve(accept_func, "localhost", 9998);
+start_server = websockets.serve(accept_func, "0.0.0.0", 9998);
 
 print('자막 서버 시작')
 

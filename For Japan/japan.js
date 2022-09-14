@@ -167,9 +167,10 @@ function beep() {
 	snd.play();
 }
 
+var server_ip = '192.168.0.6'
 
 //자막 가져오기
-var webSocket = new WebSocket('ws://localhost:9998');
+var webSocket = new WebSocket('ws://' + server_ip + ':9998');
 var is_use_socket = false;
 
 var sub_datas = '';
@@ -178,20 +179,23 @@ var late_file_name = '';
 
 var sync_sub_second = 0;
 
-webSocket.onerror = function(event) {
-	onError(event)
-};
+function set_wsk(webSocket){
+	
+	webSocket.onclose = function(event) {
+		onClose(event)
+	};
 
-webSocket.onopen = function(event) {
-	onOpen(event)
-};
+	webSocket.onopen = function(event) {
+		onOpen(event)
+	};
 
-webSocket.onmessage = function(event) {
-	onMessage(event)
-};
+	webSocket.onmessage = function(event) {
+		onMessage(event)
+	};
+	
+}
 
 function onMessage(event) {
-
 	if(!event.data.toString().includes('Could not read from Socket') && event.data.toString() != 'None'){
 		sub_datas = event.data.toString();
 	}
@@ -199,11 +203,13 @@ function onMessage(event) {
 }
 
 function onOpen(event) {
-	console.log('Connection established');
+	console.log('자막서버 연결 완료');
 }
 
-function onError(event) {
-	console.log(event.data);
+function onClose(event) {
+	console.log('자막서버 접속 중');
+	webSocket = new WebSocket('ws://' + server_ip + ':9998');
+	setTimeout(set_wsk, 1000, webSocket)
 }
 
 function send(data) {
@@ -215,6 +221,7 @@ function send(data) {
 	}
 }
 
+set_wsk(webSocket);
 
 
 function get_sub(){

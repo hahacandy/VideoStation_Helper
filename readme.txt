@@ -15,3 +15,8 @@ numpadを使って　前、今、後　の字幕に便利に移動できる
 
 pip install selenium webdriver_manager nest_asyncio asyncio websockets srt ass webvtt-py
 
+
+
+chromeの場合は
+https://www.damirscorner.com/blog/posts/20210528-AllowingInsecureWebsocketConnections.html
+このurlの通りに設定する必要あり(Insecure content 設定をオフ、videostationサイトだけ)
