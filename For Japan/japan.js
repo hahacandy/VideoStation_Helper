@@ -170,7 +170,7 @@ function beep() {
 var server_ip = '192.168.0.6'
 
 //자막 가져오기
-var webSocket = new WebSocket('ws://' + server_ip + ':9998');
+var webSocket = null;
 var is_use_socket = false;
 
 var sub_datas = '';

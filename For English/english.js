@@ -153,7 +153,7 @@ function beep() {
 var server_ip = '192.168.0.6'
 
 //자막 가져오기
-var webSocket = new WebSocket('ws://' + server_ip + ':9998');
+var webSocket = null;
 var is_use_socket = false;
 
 var sub_datas = '';
@@ -355,7 +355,7 @@ setInterval(set_sync_sub_second, 1000);
 
 //英語の字幕欄追加
 
-var webSocket2 = new WebSocket('ws://' + server_ip + ':9999');
+var webSocket2 = null;
 var is_use_socket2 = false;
 
 function set_wsk2(){
