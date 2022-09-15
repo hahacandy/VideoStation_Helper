@@ -162,7 +162,9 @@ var late_file_name = '';
 
 var sync_sub_second = 0;
 
-function set_wsk(webSocket){
+function set_wsk(){
+	
+	webSocket = new WebSocket('ws://' + server_ip + ':9998');
 	
 	webSocket.onclose = function(event) {
 		onClose(event)
@@ -191,8 +193,7 @@ function onOpen(event) {
 
 function onClose(event) {
 	console.log('자막서버 접속 중');
-	webSocket = new WebSocket('ws://' + server_ip + ':9998');
-	setTimeout(set_wsk, 1000, webSocket)
+	setTimeout(set_wsk, 1000)
 }
 
 function send(data) {
@@ -204,7 +205,7 @@ function send(data) {
 	}
 }
 
-set_wsk(webSocket);
+set_wsk();
 
 
 function get_sub(){
@@ -357,7 +358,9 @@ setInterval(set_sync_sub_second, 1000);
 var webSocket2 = new WebSocket('ws://' + server_ip + ':9999');
 var is_use_socket2 = false;
 
-function set_wsk2(webSocket2){
+function set_wsk2(){
+	
+	webSocket2 = new WebSocket('ws://' + server_ip + ':9999');
 
 	webSocket2.onclose = function(event) {
 		onClose2(event)
@@ -393,8 +396,8 @@ function onOpen2(event) {
 
 function onClose2(event) {
 	console.log('번역서버 접속 중');
-	webSocket2 = new WebSocket('ws://' + server_ip + ':9999');
-	setTimeout(set_wsk2, 1000, webSocket2)
+	
+	setTimeout(set_wsk2, 1000)
 }
 
 function send2(msg) {
@@ -411,7 +414,7 @@ function send2(msg) {
 	}
 }
 
-set_wsk2(webSocket2);
+set_wsk2();
 
 function htmlToElement(html) {
     var template = document.createElement('template');

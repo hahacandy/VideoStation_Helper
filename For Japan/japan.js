@@ -179,7 +179,9 @@ var late_file_name = '';
 
 var sync_sub_second = 0;
 
-function set_wsk(webSocket){
+function set_wsk(){
+	
+	webSocket = new WebSocket('ws://' + server_ip + ':9998');
 	
 	webSocket.onclose = function(event) {
 		onClose(event)
@@ -208,8 +210,7 @@ function onOpen(event) {
 
 function onClose(event) {
 	console.log('자막서버 접속 중');
-	webSocket = new WebSocket('ws://' + server_ip + ':9998');
-	setTimeout(set_wsk, 1000, webSocket)
+	setTimeout(set_wsk, 1000)
 }
 
 function send(data) {
@@ -221,7 +222,7 @@ function send(data) {
 	}
 }
 
-set_wsk(webSocket);
+set_wsk();
 
 
 function get_sub(){
