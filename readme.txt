@@ -1,7 +1,7 @@
 Synology の　VideoStation で字幕を見やすくする機能
 
 DSM 7.1
-VideoStationバージョン：3.0.3-2084
+VideoStationバージョン：3.0.4-2107
 VideoStationで”フォルダ別”にする必要がある
 
 "For Japan"の機能
