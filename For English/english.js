@@ -117,7 +117,7 @@ function setVideo(){
 		try{
 			if(!menuClicked){
 				try{
-					getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
+					getElementByXpath("/html/body/div[9]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
 				}catch(error){}
 
 				
@@ -215,7 +215,7 @@ function get_sub(){
 		
 		folder_name = document.getElementsByClassName('list-template selected')[0].textContent
 		
-		path_names = getElementByXpath('/html/body/div[10]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr').childNodes;
+		path_names = getElementByXpath('/html/body/div[9]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr').childNodes;
 		
 		path_name = '';
 		
@@ -345,7 +345,7 @@ setTimeout(set_player, 1000);
 //手動で字幕のsyncが調整されていたら対応する、しかし一度設定の同期画面を表す必要あり
 function set_sync_sub_second(){
 	try{
-		sync_sub_second = parseFloat(getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
+		sync_sub_second = parseFloat(getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
 	}catch(error){}
 }
 setInterval(set_sync_sub_second, 1000);
@@ -459,7 +459,7 @@ function set_trans_sub(){
 		late_eng_sub = eng_sub_text;
 		
 
-		if(subtitle_el.childNodes[0].textContent == ' '){
+		if(subtitle_el.childNodes[0].textContent == ' '){
 			trans_sub.style.display = 'none';
 			trans_sub.textContent = '';
 		}else{
