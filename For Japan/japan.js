@@ -146,7 +146,7 @@ function setVideo(){
 					}
 					
 					try{
-						sync_sub_second = parseFloat(getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
+						sync_sub_second = parseFloat(getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
 					}catch(error){}
 					
 					menuWindow = document.getElementsByClassName("x-btn syno-vc-button syno-ux-button syno-ux-button-blue x-btn-noicon");
