@@ -203,6 +203,8 @@ function set_wsk(){
 function onMessage(event) {
 	if(!event.data.toString().includes('Could not read from Socket') && event.data.toString() != 'None'){
 		sub_datas = event.data.toString();
+	}else{
+		sub_datas = '';
 	}
     is_use_socket = false;
 }
