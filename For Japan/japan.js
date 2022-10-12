@@ -54,6 +54,8 @@ var menuList = null;
 var menuClicked = false;
 var menuWindow = null;
 
+var confirm_text = null;
+
 
 function controlPlayer(e){
 	if(e.path.length == 14 || clickSO == vid){
@@ -75,6 +77,24 @@ function setVideo(){
 		menuClicked = false;
 		clickSO = null;
 		clickSOOri = null;
+		
+		//메인 페이지에서 자동으로 폴더별 버튼을 눌러줌
+		try{
+			var main_filter_button = getElementByXpath('/html/body/div[9]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
+			
+			
+			if(confirm_text == null || main_filter_button.textContent != confirm_text){
+				main_filter_button.click();
+				
+				var main_filter_button2_els = document.getElementsByClassName('x-menu x-menu-floating x-layer syno-ux-menu syno-vs2-basic-menu syno-vs2-dropdown-menu no-icon syno-ux-button-menu');
+				main_filter_button2_els = main_filter_button2_els[0].childNodes[1];
+				var main_filter_button2 = main_filter_button2_els.childNodes[4];
+				main_filter_button2.click();
+				confirm_text = main_filter_button2.textContent;
+			}
+			
+		}catch{}
+		
 	}else{
 	
 		vid = vid[0];
@@ -173,7 +193,7 @@ function beep() {
 	snd.play();
 }
 
-var server_ip = '192.168.0.16'
+var server_ip = '192.168.0.18'
 
 //자막 가져오기
 var webSocket = null;
