@@ -170,7 +170,7 @@ function beep() {
 }
 
 
-var server_ip = '192.168.0.6'
+var server_ip = '192.168.0.18'
 
 //자막 가져오기
 var webSocket = null;
@@ -328,7 +328,7 @@ function set_player(){
 
 		
 		window.addEventListener("keyup", (e) => {
-			console.log(e)
+			//console.log(e);
 			if (e.key == "4" && e.code == "Numpad4" || e.code == "KeyA") {
 				get_video_time('left');
 			} else if (e.key == "6" && e.code == "Numpad6" || e.code == "KeyD") {
