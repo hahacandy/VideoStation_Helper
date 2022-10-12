@@ -353,9 +353,23 @@ function set_player(){
 		window.addEventListener("keyup", (e) => {
 			//console.log(e)
 			if (e.key == "4" && e.code == "Numpad4" || e.code == "KeyA") {
-				get_video_time('left');
+				if(sub_datas == ''){
+					var preTime = vid.currentTime - 3;
+					if (preTime > 0) {
+						vid.currentTime = preTime;
+					}
+				}else{
+					get_video_time('left');
+				}
 			} else if (e.key == "6" && e.code == "Numpad6" || e.code == "KeyD") {
-				get_video_time('right');
+				if(sub_datas == ''){
+					var nextTime = vid.currentTime + 3;
+					if (nextTime+3 < vid.duration) {
+						vid.currentTime = nextTime;
+					}
+				}else{
+					get_video_time('right');
+				}
 			} else if (e.key == "0" && e.code == "Numpad0") {
 				if (!vid.paused) {
 					vid.pause();
