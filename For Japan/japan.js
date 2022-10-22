@@ -82,6 +82,10 @@ function setVideo(){
 		try{
 			var main_filter_button = getElementByXpath('/html/body/div[9]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
 			
+			if(main_filter_button == null){
+				main_filter_button = getElementByXpath('/html/body/div[10]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
+			}
+			
 			
 			if(confirm_text == null || main_filter_button.textContent != confirm_text){
 				main_filter_button.click();
@@ -136,9 +140,16 @@ function setVideo(){
 		//load external subtitle
 		try{
 			if(!menuClicked){
-				try{
-					getElementByXpath("/html/body/div[9]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
-				}catch(error){}
+				
+				var menu_button = getElementByXpath("/html/body/div[9]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+				
+				if(menu_button == null){
+					menu_button = getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+				}
+				
+
+				menu_button.click();
+
 				
 				menuList = document.getElementsByClassName("item vc-ellipsis");
 				if(menuList.length > 0){
@@ -155,9 +166,15 @@ function setVideo(){
 				
 				setTimeout(function() {
 					
-					try{
-						getElementByXpath("/html/body/div[9]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button").click();
-					}catch(error){}
+					var menu_button = getElementByXpath("/html/body/div[9]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+					
+					if(menu_button == null){
+						menu_button = getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+					}
+					
+
+					menu_button.click();
+
 					
 					menuList = document.getElementsByClassName("item vc-ellipsis");
 					if(menuList.length > 0){
@@ -167,9 +184,14 @@ function setVideo(){
 						  }
 						}
 						
-						try{
-							sync_sub_second = parseFloat(getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
-						}catch(error){}
+						sync_sub_second_el = getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+						if(sync_sub_second_el == null){
+							sync_sub_second_el = getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+						}
+						
+
+						sync_sub_second = parseFloat(sync_sub_second_el.value);
+	
 						
 						menuWindow = document.getElementsByClassName("x-btn syno-vc-button syno-ux-button syno-ux-button-blue x-btn-noicon");
 						menuWindow = menuWindow[menuWindow.length-1];
@@ -193,7 +215,7 @@ function beep() {
 	snd.play();
 }
 
-var server_ip = '192.168.0.18'
+var server_ip = '192.168.0.22'
 
 //자막 가져오기
 var webSocket = null;
@@ -260,7 +282,13 @@ function get_sub(){
 		
 		folder_name = document.getElementsByClassName('list-template selected')[0].textContent
 		
-		path_names = getElementByXpath('/html/body/div[9]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr').childNodes;
+		path_name_el = getElementByXpath('/html/body/div[9]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr');
+		
+		if(path_name_el == null){
+			path_name_el = getElementByXpath('/html/body/div[10]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[2]/table/tbody/tr/td[1]/table/tbody/tr');
+		}
+		
+		path_names = path_name_el.childNodes;
 		
 		path_name = '';
 		
@@ -401,7 +429,15 @@ setTimeout(set_player, 1000);
 //手動で字幕のsyncが調整されていたら対応する、しかし一度設定の同期画面を表す必要あり
 function set_sync_sub_second(){
 	try{
-		sync_sub_second = parseFloat(getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input').value)
+		
+		var sync_sub_second_el = getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+		
+		if(sync_sub_second_el == null){
+			sync_sub_second_el = getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+		}
+		
+		sync_sub_second = parseFloat(sync_sub_second_el.value);
+		
 	}catch(error){}
 }
 setInterval(set_sync_sub_second, 1000);
