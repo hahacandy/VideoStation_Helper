@@ -327,7 +327,11 @@
 			}
 			
 			try{
-				vs_video.currentTime = vs_subtitles[sub_current_idx].from + sync_sub_second;
+				if (vs_video.paused) {
+					vs_video.currentTime = vs_subtitles[sub_current_idx].from + sync_sub_second + 0.1;
+				}else{
+					vs_video.currentTime = vs_subtitles[sub_current_idx].from + sync_sub_second;
+				}
 			}catch{}
 		}
 	}
