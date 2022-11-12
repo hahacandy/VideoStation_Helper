@@ -26,7 +26,7 @@
 			vs_video = window.document.getElementsByTagName('video')[0]
 			
 			try{
-				get_subtitle(vs_subtitle_storage);
+				get_subtitle();
 			}catch{}
 			
 			if(vs_is_init_set == false){
@@ -324,7 +324,7 @@
 		}
 	}
 	
-	function get_subtitle(vs_subtitle_storage){
+	function get_subtitle(){
 		
 		vs_subtitle_storage = null;
 		vs_subtitles = null;
