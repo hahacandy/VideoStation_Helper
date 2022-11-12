@@ -118,7 +118,7 @@ function set_subtitle_setting(){
 			menuList = document.getElementsByClassName("item vc-ellipsis");
 			if(menuList.length > 0){
 				for (var i=0; i<menuList.length; i++) {
-				  if(menuList[i].textContent.includes("외부 자막") || menuList[i].textContent.includes("外部サブタイトル")){
+				  if(menuList[i].textContent.includes("외부 자막") || menuList[i].textContent.includes("外部サブタイトル") || menuList[i].textContent.includes("External subtitles")){
 				     menuList[i].click();
 				  }
 				  menuClicked = true;
@@ -143,7 +143,7 @@ function set_subtitle_setting(){
 				menuList = document.getElementsByClassName("item vc-ellipsis");
 				if(menuList.length > 0){
 					for (var i=0; i<menuList.length; i++) {
-					  if(menuList[i].textContent.includes("자막 동기화") || menuList[i].textContent.includes("サブタイトルを同期")){
+					  if(menuList[i].textContent.includes("자막 동기화") || menuList[i].textContent.includes("サブタイトルを同期") || menuList[i].textContent.includes("Sync subtitles")){
 					     menuList[i].click();
 					  }
 					}
