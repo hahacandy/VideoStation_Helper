@@ -1,4 +1,4 @@
-// 2022.11.12 15:31 by hahacandy
+// 2022.11.12 15:43 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
@@ -279,7 +279,7 @@
 			
 			try{
 				if (vs_video.paused) {
-					vs_video.currentTime = vs_subtitles[sub_current_idx+1].from + sync_sub_second + 0.1;
+					vs_video.currentTime = vs_subtitles[sub_current_idx+1].from + sync_sub_second + 0.01;
 				}else{
 					vs_video.currentTime = vs_subtitles[sub_current_idx+1].from + sync_sub_second;
 				}
@@ -304,7 +304,7 @@
 			
 			try{
 				if (vs_video.paused) {
-					vs_video.currentTime = vs_subtitles[sub_current_idx-1].from + sync_sub_second + 0.1;
+					vs_video.currentTime = vs_subtitles[sub_current_idx-1].from + sync_sub_second + 0.01;
 				}else{
 					vs_video.currentTime = vs_subtitles[sub_current_idx-1].from + sync_sub_second;
 				}
@@ -329,7 +329,7 @@
 			
 			try{
 				if (vs_video.paused) {
-					vs_video.currentTime = vs_subtitles[sub_current_idx].from + sync_sub_second + 0.1;
+					vs_video.currentTime = vs_subtitles[sub_current_idx].from + sync_sub_second + 0.01;
 				}else{
 					vs_video.currentTime = vs_subtitles[sub_current_idx].from + sync_sub_second;
 				}
