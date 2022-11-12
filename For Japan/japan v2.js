@@ -250,14 +250,14 @@ function get_video_time(mode){
     var vid_current_time = vs_video.currentTime;
 	var sub_current_idx = null;
 	
-	for(i=0;i<vs_subtitles.length;i++){
-	    if(vs_subtitles[i].from + sync_sub_second <= vid_current_time && vid_current_time < vs_subtitles[i].to + sync_sub_second){
-			sub_current_idx = i;
-    		break;
-	    }
-	}
-	
+
 	if(mode == 'right'){
+		for(i=vs_subtitles.length-1;i>0;i--){
+		    if(vs_subtitles[i].from + sync_sub_second <= vid_current_time && vid_current_time < vs_subtitles[i].to + sync_sub_second){
+				sub_current_idx = i;
+	    		break;
+		    }
+		}
 		if(sub_current_idx == null){
 			var near_subtitles = [];
 			for(i=0;i<vs_subtitles.length;i++){
@@ -273,6 +273,12 @@ function get_video_time(mode){
 			vs_video.currentTime = vs_subtitles[sub_current_idx+1].from + sync_sub_second;
 		}catch{}
 	}else if(mode == 'left'){
+		for(i=0;i<vs_subtitles.length;i++){
+		    if(vs_subtitles[i].from + sync_sub_second <= vid_current_time && vid_current_time < vs_subtitles[i].to + sync_sub_second){
+				sub_current_idx = i;
+	    		break;
+		    }
+		}
 		if(sub_current_idx == null){
 			var near_subtitles = [];
 			for(i=0;i<vs_subtitles.length;i++){
@@ -288,6 +294,12 @@ function get_video_time(mode){
 			vs_video.currentTime = vs_subtitles[sub_current_idx-1].from + sync_sub_second;
 		}catch{}
 	}else if(mode == 'up'){
+		for(i=0;i<vs_subtitles.length;i++){
+		    if(vs_subtitles[i].from + sync_sub_second <= vid_current_time && vid_current_time < vs_subtitles[i].to + sync_sub_second){
+				sub_current_idx = i;
+	    		break;
+		    }
+		}
 		if(sub_current_idx == null){
 			var near_subtitles = [];
 			for(i=0;i<vs_subtitles.length;i++){
