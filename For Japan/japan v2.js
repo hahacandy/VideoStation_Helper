@@ -1,3 +1,4 @@
+// 2022.11.12 15:31 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
