@@ -277,7 +277,11 @@
 			}
 			
 			try{
-				vs_video.currentTime = vs_subtitles[sub_current_idx+1].from + sync_sub_second;
+				if (vs_video.paused) {
+					vs_video.currentTime = vs_subtitles[sub_current_idx+1].from + sync_sub_second + 0.1;
+				}else{
+					vs_video.currentTime = vs_subtitles[sub_current_idx+1].from + sync_sub_second;
+				}
 			}catch{}
 		}else if(mode == 'left'){
 			for(i=0;i<vs_subtitles.length;i++){
@@ -298,7 +302,11 @@
 			}
 			
 			try{
-				vs_video.currentTime = vs_subtitles[sub_current_idx-1].from + sync_sub_second;
+				if (vs_video.paused) {
+					vs_video.currentTime = vs_subtitles[sub_current_idx-1].from + sync_sub_second + 0.1;
+				}else{
+					vs_video.currentTime = vs_subtitles[sub_current_idx-1].from + sync_sub_second;
+				}
 			}catch{}
 		}else if(mode == 'up'){
 			for(i=0;i<vs_subtitles.length;i++){
