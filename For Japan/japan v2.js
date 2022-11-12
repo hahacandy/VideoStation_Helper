@@ -232,7 +232,13 @@ function set_video_key_listener(){
 					}
 				} else if (e.key == "8" && e.code == "Numpad8" || e.code == "KeyW") {
 					get_video_time('up');
+				} else if (e.key == "0" && e.code == "Numpad0") {
+				if (!vs_video.paused) {
+					vs_video.pause();
+				} else {
+					vs_video.play();
 				}
+			}
 			}catch{}
 	
 		});
