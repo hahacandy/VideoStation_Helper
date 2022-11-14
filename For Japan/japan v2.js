@@ -1,4 +1,4 @@
-// 2022.11.14 10:17 by hahacandy
+// 2022.11.14 11:56 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
@@ -58,14 +58,15 @@
 	function set_sort_folder(){
 		//메인 페이지에서 자동으로 폴더별 버튼을 눌러줌
 		try{
-			var main_filter_button = getElementByXpath('/html/body/div[9]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
 			
-			if(main_filter_button == null){
-				main_filter_button = getElementByXpath('/html/body/div[10]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
-			}
+			var main_filter_button = null
 			
-			if(main_filter_button == null){
-				main_filter_button = getElementByXpath('/html/body/div[11]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
+			for(var i=0; i<30; i++){
+				main_filter_button = getElementByXpath('/html/body/div[' +i+ ']/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
+				
+				if(main_filter_button != null){
+					break;
+				}
 			}
 			
 			
@@ -95,12 +96,16 @@
 	function set_sync_sub_second(){
 		try{
 			
-			var sync_sub_second_el = getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+			var sync_sub_second_el = null
 			
-			if(sync_sub_second_el == null){
-				sync_sub_second_el = getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+			for(var i=0; i<30; i++){
+				sync_sub_second_el = getElementByXpath('/html/body/div[' + i + ']/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+				
+				if(sync_sub_second_el != null){
+					break;
+				}
 			}
-			
+
 			sync_sub_second = parseFloat(sync_sub_second_el.value);
 			
 		}catch(error){}
@@ -111,14 +116,15 @@
 		try{
 			if(!menuClicked){
 				
-				var menu_button = getElementByXpath("/html/body/div[9]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
 				
-				if(menu_button == null){
-					menu_button = getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
-				}
+				var menu_button = null
 				
-				if(menu_button == null){
-					menu_button = getElementByXpath("/html/body/div[11]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+				for(var i=0; i<30; i++){
+					menu_button = getElementByXpath("/html/body/div[' + i + ']/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+					
+					if(menu_button != null){
+						break;
+					}
 				}
 				
 	
@@ -140,16 +146,15 @@
 				
 				setTimeout(function() {
 					
-					var menu_button = getElementByXpath("/html/body/div[9]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+					var menu_button = null
 					
-					if(menu_button == null){
-						menu_button = getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+					for(var i=0; i<30; i++){
+						menu_button = getElementByXpath("/html/body/div[' + i + ']/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+						
+						if(menu_button != null){
+							break;
+						}
 					}
-					
-					if(menu_button == null){
-						menu_button = getElementByXpath("/html/body/div[11]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
-					}
-					
 	
 					menu_button.click();
 	
@@ -162,15 +167,14 @@
 						  }
 						}
 						
-						sync_sub_second_el = getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
-						if(sync_sub_second_el == null){
-							sync_sub_second_el = getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
-						}
-						if(sync_sub_second_el == null){
-							sync_sub_second_el = getElementByXpath('/html/body/div[11]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+						for(var i=0; i<30; i++){
+							sync_sub_second_el = getElementByXpath('/html/body/div[' + i + ']/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+							
+							if(sync_sub_second_el != null){
+								break;
+							}
 						}
 						
-	
 						sync_sub_second = parseFloat(sync_sub_second_el.value);
 	
 						
