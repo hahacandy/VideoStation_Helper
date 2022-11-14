@@ -1,4 +1,4 @@
-// 2022.11.14 11:56 by hahacandy
+// 2022.11.14 12:19 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
@@ -117,7 +117,7 @@
 			if(!menuClicked){
 				
 				
-				var menu_button = null
+				var menu_button = null;
 				
 				for(var i=0; i<30; i++){
 					menu_button = getElementByXpath("/html/body/div[' + i + ']/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
@@ -127,26 +127,25 @@
 					}
 				}
 				
-	
 				menu_button.click();
-	
 				
 				menuList = document.getElementsByClassName("item vc-ellipsis");
 				if(menuList.length > 0){
 					for (var i=0; i<menuList.length; i++) {
 					  if(menuList[i].textContent.includes("외부 자막") || menuList[i].textContent.includes("外部サブタイトル") || menuList[i].textContent.includes("External subtitles")){
-					     menuList[i].click();
+						 menuList[i].click();
 					  }
 					  menuClicked = true;
 					}
 					menuWindow = document.getElementsByClassName("syno-ux-button-menu");
-					menuWindow = menuWindow[menuWindow.length-1]
+					menuWindow = menuWindow[menuWindow.length-1];
 					menuWindow.style.visibility = "hidden";
 				}
+
 				
 				setTimeout(function() {
 					
-					var menu_button = null
+					var menu_button = null;
 					
 					for(var i=0; i<30; i++){
 						menu_button = getElementByXpath("/html/body/div[' + i + ']/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
