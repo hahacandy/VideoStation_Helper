@@ -1,4 +1,4 @@
-// 2022.11.12 15:43 by hahacandy
+// 2022.11.14 10:17 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
@@ -64,6 +64,10 @@
 				main_filter_button = getElementByXpath('/html/body/div[10]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
 			}
 			
+			if(main_filter_button == null){
+				main_filter_button = getElementByXpath('/html/body/div[11]/div[2]/div[3]/div[1]/div/div/div[2]/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div[1]/div/table/tbody/tr/td[1]/table/tbody/tr/td/div/div[1]/table/tbody/tr/td[1]/table/tbody/tr/td[1]/span/em/button');
+			}
+			
 			
 			if(confirm_text == null || main_filter_button.textContent != confirm_text){
 				main_filter_button.click();
@@ -113,6 +117,10 @@
 					menu_button = getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
 				}
 				
+				if(menu_button == null){
+					menu_button = getElementByXpath("/html/body/div[11]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+				}
+				
 	
 				menu_button.click();
 	
@@ -138,6 +146,10 @@
 						menu_button = getElementByXpath("/html/body/div[10]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
 					}
 					
+					if(menu_button == null){
+						menu_button = getElementByXpath("/html/body/div[11]/div[5]/div[3]/div[1]/div/div/div/div[6]/div[2]/div[3]/span[6]/em/button");
+					}
+					
 	
 					menu_button.click();
 	
@@ -153,6 +165,9 @@
 						sync_sub_second_el = getElementByXpath('/html/body/div[9]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
 						if(sync_sub_second_el == null){
 							sync_sub_second_el = getElementByXpath('/html/body/div[10]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
+						}
+						if(sync_sub_second_el == null){
+							sync_sub_second_el = getElementByXpath('/html/body/div[11]/div[9]/div[3]/div[1]/div/div/div/div/div/div/table/tbody/tr/td[1]/input');
 						}
 						
 	
