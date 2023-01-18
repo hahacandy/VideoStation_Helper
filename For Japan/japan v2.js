@@ -1,4 +1,4 @@
-// 2022.11.14 12:19 by hahacandy
+// 2023.01.18 20:20 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
@@ -387,7 +387,7 @@
 	  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 	}
 	function controlPlayer(e){
-		if(e.path.length == 14 || clickSO == vs_video){
+		if(e.srcElement.className == 'subtitle' || clickSO == vs_video){
 			if (!vs_video.paused) {
 				vs_video.pause();
 			} else {
