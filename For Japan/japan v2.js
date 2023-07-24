@@ -404,19 +404,22 @@
 	
 	function close_auto_volume_window(){
 		//볼륨 창 켜져있고, 5초동안 볼륨이 안바뀌면 볼륨창 닫음
-		var current_volume = document.getElementsByClassName('volume')[1].style.height;
-		if(document.getElementsByClassName('syno-vc-volume-menu')[0].style.visibility == 'visible'){
-			if(current_volume == latest_volume){
-				cnt_change_volume = cnt_change_volume + 1;
-				if(cnt_change_volume >= 5){
-					document.getElementsByClassName('syno-vc-volume-menu')[0].style.visibility='hidden';
+		try{
+			var current_volume = document.getElementsByClassName('volume')[1].style.height;
+			if(document.getElementsByClassName('syno-vc-volume-menu')[0].style.visibility == 'visible'){
+				if(current_volume == latest_volume){
+					cnt_change_volume = cnt_change_volume + 1;
+					if(cnt_change_volume >= 5){
+						document.getElementsByClassName('syno-vc-volume-menu')[0].style.visibility='hidden';
+						cnt_change_volume = 0;
+					}
+				}else{
 					cnt_change_volume = 0;
 				}
-			}else{
-				cnt_change_volume = 0;
 			}
+			latest_volume = current_volume;
 		}
-		latest_volume = current_volume;
+		catch{}
 	}
 })();
 
