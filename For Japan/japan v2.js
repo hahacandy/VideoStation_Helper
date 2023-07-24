@@ -1,4 +1,4 @@
-// 2023.01.18 20:20 by hahacandy
+// 2023.07.24 21:32 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
@@ -18,6 +18,9 @@
 	
 	var vs_subtitle_storage = null;
 	var vs_subtitles = null;
+	
+	var latest_volume = '';
+	var cnt_change_volume = 0;
 	
 	
 	//// main
@@ -40,6 +43,7 @@
 			
 			set_sync_sub_second();
 			set_volume();
+			close_auto_volume_window();
 			
 		}catch{
 			
@@ -386,7 +390,9 @@
 	function getElementByXpath(path) {
 	  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 	}
+	
 	function controlPlayer(e){
+		//영상을 마우스로 누르면 멈추거나, 플레이되는데, 자막칸이라면 작동안하게
 		if(e.srcElement.className == 'subtitle' || clickSO == vs_video){
 			if (!vs_video.paused) {
 				vs_video.pause();
@@ -394,6 +400,23 @@
 				vs_video.play();
 			}
 		}
+	}
+	
+	function close_auto_volume_window(){
+		//볼륨 창 켜져있고, 5초동안 볼륨이 안바뀌면 볼륨창 닫음
+		var current_volume = document.getElementsByClassName('volume')[1].style.height;
+		if(document.getElementsByClassName('syno-vc-volume-menu')[0].style.visibility == 'visible'){
+			if(current_volume == latest_volume){
+				cnt_change_volume = cnt_change_volume + 1;
+				if(cnt_change_volume >= 5){
+					document.getElementsByClassName('syno-vc-volume-menu')[0].style.visibility='hidden';
+					cnt_change_volume = 0;
+				}
+			}else{
+				cnt_change_volume = 0;
+			}
+		}
+		latest_volume = current_volume;
 	}
 })();
 
