@@ -1,4 +1,4 @@
-// 2023.07.24 21:32 by hahacandy
+// 2023.11.20 14:47 by hahacandy
 (function(){
 	var vs_video = null
 	var subT = null;
@@ -22,37 +22,41 @@
 	var latest_volume = '';
 	var cnt_change_volume = 0;
 	
+	var is_while = false;
+	
 	
 	//// main
 	setInterval(function () {
-		
-		try{
-			vs_video = window.document.getElementsByTagName('video')[0]
-			
-			try{
-				get_subtitle();
-			}catch{}
-			
-			if(vs_is_init_set == false){
+		if(is_while == false){
+			is_while = true;
+			vs_video = window.document.getElementsByTagName('video')[0];
+			if(vs_video != null){
 				
-				vs_is_init_set = true;
-				set_click_pause_and_play();
-				set_video_key_listener();
-				set_subtitle_setting();
+				if(vs_subtitle_storage == null){
+					try{
+						get_subtitle();
+					}catch{}
+				}
+				
+				if(vs_is_init_set == false){
+					
+					vs_is_init_set = true;
+					set_click_pause_and_play();
+					set_video_key_listener();
+					set_subtitle_setting();
+				}
+				
+				set_sync_sub_second();
+				set_volume();
+				close_auto_volume_window();
+				
+			}else{
+				
+				init_value();
+				set_sort_folder();
 			}
-			
-			set_sync_sub_second();
-			set_volume();
-			close_auto_volume_window();
-			
-		}catch{
-			
-			init_value();
-			
-			set_sort_folder();
-	
 		}
-		
+		is_while = false;
 	}, 100);
 	
 	
@@ -95,6 +99,8 @@
 		is_vid_volume_set = false;
 		menuClicked = false;
 		sync_sub_second = 0;
+		vs_subtitle_storage = null;
+		vs_subtitles = null;
 	}
 	
 	function set_sync_sub_second(){
@@ -236,7 +242,7 @@
 			window.addEventListener("keyup", (e) => {
 				//console.log(e)
 				try{
-					if (e.key == "4" && e.code == "Numpad4" || e.code == "KeyA") {
+					if (e.code == "KeyA") {
 						if(vs_subtitles == null){
 							var preTime = vs_video.currentTime - 3;
 							if (preTime > 0) {
@@ -245,7 +251,7 @@
 						}else{
 							get_video_time('left');
 						}
-					} else if (e.key == "6" && e.code == "Numpad6" || e.code == "KeyD") {
+					} else if (e.code == "KeyD") {
 						if(vs_subtitles == null){
 							var nextTime = vs_video.currentTime + 3;
 							if (nextTime+3 < vs_video.duration) {
@@ -254,15 +260,9 @@
 						}else{
 							get_video_time('right');
 						}
-					} else if (e.key == "8" && e.code == "Numpad8" || e.code == "KeyW") {
+					} else if (e.code == "KeyW") {
 						get_video_time('up');
-					} else if (e.key == "0" && e.code == "Numpad0") {
-					if (!vs_video.paused) {
-						vs_video.pause();
-					} else {
-						vs_video.play();
 					}
-				}
 				}catch{}
 		
 			});
@@ -360,9 +360,6 @@
 	}
 	
 	function get_subtitle(){
-		
-		vs_subtitle_storage = null;
-		vs_subtitles = null;
 		
 		try{
 			vs_subtitle_storage = SYNO.ux.ComponentARIA.initList;
