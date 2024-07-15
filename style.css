@@ -1,4 +1,4 @@
-.subtitle {
+.subtitle > div {
     text-shadow: black 0px 0px 7px, rgb(0 0 0 / 80%) 0px 0px 18px;
 
     color: white;
@@ -8,5 +8,6 @@
     line-height: 1.4em;
     position: relative;
     cursor: text;
+    font-size: calc(18px + 2vw);
 
 }
