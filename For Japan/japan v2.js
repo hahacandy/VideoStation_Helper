@@ -35,7 +35,7 @@
         var style = document.createElement('style');
         style.type = 'text/css';
         style.innerHTML = `
-            .subtitle > div {
+            #custom-subtitle-box {
                 text-shadow: black 0px 0px 7px, rgb(0 0 0 / 80%) 0px 0px 18px;
                 font-size: calc(18px + 2vw);
             }
