@@ -185,6 +185,7 @@
 		    if (vs_subtitles) {
 		        var currentTime = vs_video.currentTime; // 현재 재생 중인 시간
 		        var subtitleBlock = ''; // 겹치는 자막을 저장할 변수
+		        var foundSubtitle = false; // 자막이 존재하는지 확인하는 변수
 		    
 		        for (var i = 0; i < vs_subtitles.length; i++) {
 		            var startTime = vs_subtitles[i].from + sync_sub_second; // 자막 시작 시간
@@ -196,17 +197,22 @@
 		                    subtitleBlock += '<br/>'; // 줄바꿈 추가
 		                }
 		                subtitleBlock += vs_subtitles[i].text; // 자막 텍스트 추가
+		                foundSubtitle = true;
 		            }
 		        }
-		    
-		        if (subtitleBlock !== '') {
+		
+		        // 중복 자막이 표시되지 않도록 처리 (마지막 자막과 동일하지 않으면 업데이트)
+		        if (foundSubtitle && subtitleBlock !== last_subtitle) {
 		            subtitle_text_box.innerHTML = subtitleBlock; // 자막 텍스트를 새로 추가한 텍스트 박스에 삽입
 		            new_subtitle_box.style.display = 'block'; // 자막이 있으면 보여줌
-		        } else {
+		            last_subtitle = subtitleBlock; // 마지막으로 표시된 자막 업데이트
+		        } else if (!foundSubtitle) {
 		            new_subtitle_box.style.display = 'none'; // 자막이 없으면 숨김
+		            last_subtitle = ''; // 자막이 없을 때 마지막 자막을 초기화
 		        }
 		    }
 		}
+
 
     function set_sort_folder() {
         // 메인 페이지에서 자동으로 폴더별 버튼을 눌러줌
