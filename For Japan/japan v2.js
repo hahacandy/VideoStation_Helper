@@ -181,34 +181,32 @@
         }
     }
 
-    function update_subtitle() {
-        if (vs_subtitles) {
-            var currentTime = vs_video.currentTime; // 현재 재생 중인 시간
-            var foundSubtitle = false;
-    
-            for (var i = 0; i < vs_subtitles.length; i++) {
-                var startTime = vs_subtitles[i].from + sync_sub_second; // 자막 시작 시간
-                var endTime = vs_subtitles[i].to + sync_sub_second; // 자막 종료 시간
-    
-                if (currentTime >= startTime && currentTime <= endTime) {
-                    // 중복 자막 삽입 방지
-                    if (vs_subtitles[i].text !== last_subtitle) {
-                        subtitle_text_box.innerHTML = vs_subtitles[i].text; // 자막 텍스트를 새로 추가한 텍스트 박스에 삽입
-                        last_subtitle = vs_subtitles[i].text; // 마지막으로 표시된 자막 업데이트
-                        new_subtitle_box.style.display = 'block'; // 자막이 있으면 보여줌
-                    }
-                    foundSubtitle = true;
-                    break;
-                }
-            }
-    
-            // 자막이 없는 경우 자막창을 숨김
-            if (!foundSubtitle) {
-                new_subtitle_box.style.display = 'none';
-                last_subtitle = ''; // 자막이 없을 때 마지막 자막을 초기화
-            }
-        }
-    }
+		function update_subtitle() {
+		    if (vs_subtitles) {
+		        var currentTime = vs_video.currentTime; // 현재 재생 중인 시간
+		        var subtitleBlock = ''; // 겹치는 자막을 저장할 변수
+		    
+		        for (var i = 0; i < vs_subtitles.length; i++) {
+		            var startTime = vs_subtitles[i].from + sync_sub_second; // 자막 시작 시간
+		            var endTime = vs_subtitles[i].to + sync_sub_second; // 자막 종료 시간
+		    
+		            if (currentTime >= startTime && currentTime <= endTime) {
+		                // 자막을 줄바꿈으로 구분하여 추가
+		                if (subtitleBlock !== '') {
+		                    subtitleBlock += '<br/>'; // 줄바꿈 추가
+		                }
+		                subtitleBlock += vs_subtitles[i].text; // 자막 텍스트 추가
+		            }
+		        }
+		    
+		        if (subtitleBlock !== '') {
+		            subtitle_text_box.innerHTML = subtitleBlock; // 자막 텍스트를 새로 추가한 텍스트 박스에 삽입
+		            new_subtitle_box.style.display = 'block'; // 자막이 있으면 보여줌
+		        } else {
+		            new_subtitle_box.style.display = 'none'; // 자막이 없으면 숨김
+		        }
+		    }
+		}
 
     function set_sort_folder() {
         // 메인 페이지에서 자동으로 폴더별 버튼을 눌러줌
